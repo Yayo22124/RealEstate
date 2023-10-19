@@ -1,0 +1,34 @@
+extends ../layout/index
+
+block content
+  div.py-5
+    h1.text-center.text-4xl.font-extrabold.my-3.text-majorelle-blue Real
+      span.font-bold.text-reislin-black State
+    if errors
+      div(class="max-w-md mx-auto my-10")
+        each error in errors
+          p(class="bg-red-600 rounded-md text-white uppercase text-xs text-center p-2 mb-1 font-bold")= error.msg 
+  .mt-8.mx-auto.max-w-md
+    .bg-mint-cream.py-8.px-4.shadow-xl.rounded-3xl
+      h2.text-center.text-3xl.font-extrabold.mb-6= page
+      form.space-y-4(action="/bienes-raices/login/register-account" method="post" noValidate class="flex items-center flex-col justify-center gap-5")
+        div.w-full
+          label.block.text-sm.text-caput-mortuum.mb-2.font-bold(for="name") Your name
+          input#name.w-full.px-3.py-2.border.border-gray-300.rounded-xl(class="ease-in-out focus:outline-none focus:border-2 focus:border-majorelle-blue" placeholder="Full name" type="text" name="name" required)
+        div.w-full
+          label.block.text-sm.text-caput-mortuum.mb-2.font-bold(for="email") Email Register
+          input#email.w-full.px-3.py-2.border.border-gray-300.rounded-xl(class="ease-in-out focus:outline-none focus:border-2 focus:border-majorelle-blue" placeholder="user@domain.com" type="email" name="email" required)
+        div.w-full
+          label.block.text-sm.text-caput-mortuum.mb-2.font-bold(for="password") Password
+          input#password.w-full.px-3.py-2.border.border-gray-300.rounded-xl(class="ease-in-out focus:outline-none focus:border-2 focus:border-majorelle-blue" placeholder="Your password" type="password" name="password" required)
+        div.w-full
+          label.block.text-sm.text-caput-mortuum.mb-2.font-bold(for="repeat-password") Repeat Password
+          input#repeatPassword.w-full.px-3.py-2.border.border-gray-300.rounded-xl(class="ease-in-out focus:outline-none focus:border-2 focus:border-majorelle-blue" placeholder="Repeat your password" type="password" name="repeatPassword" required)
+
+
+        div.flex.items-center.justify-between.w-full
+          a.text-xs.font-medium(href="/bienes-raices/" class="hover:underline decoration-2 decoration-majorelle-blue") Have an account? 
+            span.text-majorelle-blue Log in
+          a.text-xs.font-medium(href="/bienes-raices/login/recovery" class="hover:underline decoration-2 decoration-majorelle-blue") Forgot your password? 
+            span.text-majorelle-blue Recover it
+        button(class="w-[50%] bg-reislin-black text-white font-bold p-2 cursor-pointer rounded-xl ease-in-out transition-all hover:scale-[1.05] hover:bg-english-violet/90 hover:bg-majorelle-blue active:scale-[0.95]" type="submit" value="Create account") Create Account

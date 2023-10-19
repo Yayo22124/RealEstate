@@ -1,0 +1,41 @@
+{
+  "name": "bienesraices-220087",
+  "version": "1.0.0",
+  "description": "Este proyecto será desarrollado con Node, Express, Tailwind, Leaflef. Consistirá en realizar un sistema web que permita la publicación de propiedad para su compra venta.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "start-permanente": "nodemon ./src/server",
+    "dev": "nodemon ./src/index",
+    "css": "postcss ./src/public/css/tailwind.css -o ./src/public/css/app.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "AWOS",
+    "API",
+    "REST",
+    "MYSQL",
+    "BIENES",
+    "RAICES",
+    "TAILWIND"
+  ],
+  "author": "Eli Haziel Ortiz Ramirez 220087",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.1",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "tailwindcss": "^3.3.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express-validator": "^7.0.1",
+    "mysql2": "^3.6.1",
+    "pug": "^3.0.2",
+    "sequelize": "^6.33.0"
+  }
+}

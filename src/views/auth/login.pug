@@ -1,0 +1,24 @@
+extends ../layout/index
+
+block content
+  div.py-5
+    h1.text-center.text-4xl.font-extrabold.my-3.text-majorelle-blue Real
+      span.font-bold.text-reislin-black State
+
+  .mt-8.mx-auto.max-w-md
+    .bg-mint-cream.py-8.px-4.shadow-xl.rounded-3xl
+      h2.text-center.text-3xl.font-extrabold.mb-9= page
+      form.flex.items-center.flex-col.justify-center.gap-5
+        div.w-full
+          label.block.text-sm.mb-2.font-bold(for="email") Email Register
+          input#email.w-full.px-3.py-2.border.border-gray-300.rounded-xl.mb-2(class="ease-in-out focus:outline-none focus:border-2 focus:border-majorelle-blue" placeholder="user@alegon.com" type="email" name="email")
+        div.w-full
+          label.block.text-sm.mb-2.font-bold(for="password") Password
+          input#password.w-full.px-3.py-2.border.border-gray-300.rounded-xl.placeholder-alice-blue.mb-2(class="ease-in-out focus:outline-none focus:border-2 focus:border-majorelle-blue" placeholder="Password" type="password" name="password")
+
+
+        div.flex.items-center.justify-between.w-full
+          a.text-xs.text-(href="/bienes-raices/login/register" class="hover:underline underline-offset-6 decoration-2 decoration-majorelle-blue font-medium") Create an account
+          a.text-xs.text-caput-mortuum(href="/bienes-raices/login/recovery" class="hover:underline underline-offset-6 decoration-2 decoration-majorelle-blue font-medium ease-in-out") Forgot your password? 
+            span.text-majorelle-blue Recover it
+        button(class="w-[50%] bg-reislin-black text-white font-bold p-2 cursor-pointer rounded-xl ease-in-out transition-all hover:scale-[1.05] hover:bg-english-violet/90 hover:bg-majorelle-blue active:scale-[0.95]" type="submit" value="Login in") Login In
