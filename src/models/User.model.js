@@ -2,6 +2,8 @@
 
 import { BOOLEAN, DataTypes } from "sequelize";
 
+import Property from "./Property.model.js";
+import bcrypt from 'bcrypt'
 import db from '../config/database.js'
 
 const User = db.define("tbb_users", {
@@ -21,8 +23,19 @@ const User = db.define("tbb_users", {
     token: DataTypes.STRING,
     verified: {
         type: DataTypes.BOOLEAN,
-        default: false
+        allowNull: false,
+        defaultValue: false
+
+    }
+},{
+    hooks: {
+        beforeCreate: async (User) => {
+            const salt = await bcrypt.genSalt(10);
+            User.password = await bcrypt.hash(User.password, salt);
+        }
     }
 })
+
+User.hasMany(Property, {foreignKey: 'owner_id'});
 
 export default User;

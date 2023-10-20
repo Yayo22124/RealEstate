@@ -1,0 +1,29 @@
+extends ../layout/index
+
+block content
+  div.py-5
+    h1.text-center.text-4xl.font-extrabold.my-3.text-majorelle-blue Real
+      span.font-bold.text-reislin-black State
+    if errors
+      div(class="max-w-md mx-auto my-10")
+        each error in errors
+          p(class="bg-red-600 rounded-md text-white uppercase text-xs text-center p-2 mb-1 font-bold")= error.msg 
+  .mt-8.mx-auto.max-w-md
+    .bg-mint-cream.py-8.px-4.shadow-xl.rounded-3xl
+      h2.text-center.text-3xl.font-extrabold.mb-6= page
+      form.space-y-4(action="/bienes-raices/propertys/register-property" method="post" noValidate class="flex items-center flex-col justify-center gap-5")
+        div.w-full
+          label.block.text-sm.text-caput-mortuum.mb-2.font-bold(for="title") Title
+          input#title.w-full.px-3.py-2.border.border-gray-300.rounded-xl(class="ease-in-out focus:outline-none focus:border-2 focus:border-majorelle-blue" placeholder="Title for your new publication" type="text" name="title" value=property ? property.title : '' required)
+        div.w-full
+          label.block.text-sm.text-caput-mortuum.mb-2.font-bold(for="description") Description
+          textarea#description.w-full.px-3.py-2.border.border-gray-300.rounded-xl(cols="20", rows="3" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 ease-in-out focus:outline-none focus:border-2 focus:border-majorelle-blue" placeholder="Describe your new property to sell" type="textarea" name="description" value=property ? property.description : '')
+        div.w-full
+          label.block.text-sm.text-caput-mortuum.mb-2.font-bold(for="price") Price
+          input#price.w-full.px-3.py-2.border.border-gray-300.rounded-xl(class="ease-in-out focus:outline-none focus:border-2 focus:border-majorelle-blue " placeholder="$ 50000" type="number" step="100" min="0.00" name="price" required)
+        div.w-full
+          label.block.text-sm.text-caput-mortuum.mb-2.font-bold(for="owner") Owner
+          input#owner.w-full.px-3.py-2.border.border-gray-300.rounded-xl(class="ease-in-out focus:outline-none focus:border-2 focus:border-majorelle-blue" placeholder="Select an owner" type="number" min="0"  step="1" max="10" name="owner"  value=property ? property.owner : '' required)
+
+
+        button(class="w-[50%] bg-reislin-black text-white font-bold p-2 cursor-pointer rounded-xl ease-in-out transition-all hover:scale-[1.05] hover:bg-english-violet/90 hover:bg-majorelle-blue active:scale-[0.95]" type="submit" value="Create account") Register

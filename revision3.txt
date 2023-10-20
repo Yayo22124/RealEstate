@@ -1,0 +1,2 @@
+
+titulo, descripcion, precio (maquetado con el signo de precio) y relacionado a usuarios12
