@@ -1,8 +1,8 @@
 import { check, validationResult } from "express-validator";
 
 import User from "../models/User.model.js"
+import { emailRegister } from "../lib/emails.js";
 import { generateID } from "../lib/tokens.js";
-import { response } from "express"
 
 const userController = {};
 
@@ -40,15 +40,15 @@ userController.insertUser = async (req, res) => {
 
   let result = validationResult(req);
 
-  
+
   // Validate duplicate emails
-  
-  if (result.isEmpty() ) {
+
+  if (result.isEmpty()) {
     // Desestructure Object Body
     const { name, email, password } = req.body;
     const token = generateID();
     console.log(`Intentando insertar al usuario: ${name}, con correo electrónico: ${email}, password: ${password} y token: ${token}`);
-    
+
     const userExists = await User.findOne({ where: { email: email } })
     console.log(userExists);
     if (userExists) {
@@ -68,7 +68,18 @@ userController.insertUser = async (req, res) => {
         password,
         token
       });
-      res.send("User created")
+
+      //! Sending confirmation email 
+      emailRegister({
+        name,
+        email,
+        token
+      })
+      // response when user was created
+      res.render('templates/message.pug', {
+        page: "User Created Successfull",
+        message: `We have sent you an email to: ${email}, please verify your account`
+      })
     }
 
   } else {
@@ -84,6 +95,35 @@ userController.insertUser = async (req, res) => {
   }
 
 
+}
+
+userController.confirmAccount = async (req, res, next) => {
+  // Get token of URL (request)
+  const { token } = req.params;
+  // Verify if token already exists
+  let userToken = await User.findOne({ where: { token } });
+  // TODO: Paginas de respuesta
+  if (!userToken) {
+    console.log(`This token is invalid `);
+    res.render('templates/message.pug', {
+      page: "Error in Validation Process", 
+      notificationTitle: "The token is invalid ",
+      notificationMessage: "The token is invalid ",
+      type: "warning"
+    })
+  } else {
+    console.log(`This token is valid`);
+    userToken.verified = true;
+    userToken.save();
+    userToken.token = null;
+    
+    res.render('templates/message.pug', {
+      page: "Validation Complete", 
+      notificationTitle: "Your account has been confirmed",
+      notificationMessage: "Your account has been confirmed",
+      type: "Info"
+    })
+  }
 }
 
 export default userController;

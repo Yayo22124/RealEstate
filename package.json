@@ -33,9 +33,12 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "csrf": "^3.1.0",
     "dotenv": "^16.3.1",
     "express-validator": "^7.0.1",
     "mysql2": "^3.6.1",
+    "nodemailer": "^6.9.7",
     "pug": "^3.0.2",
     "sequelize": "^6.33.0"
   }

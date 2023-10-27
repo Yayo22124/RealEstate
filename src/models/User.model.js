@@ -20,14 +20,18 @@ const User = db.define("tbb_users", {
         type: DataTypes.STRING,
         allowNull: false
     },
-    token: DataTypes.STRING,
+    token: {
+        type: DataTypes.STRING,
+        unique: true
+
+    },
     verified: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
 
     }
-},{
+}, {
     hooks: {
         beforeCreate: async (User) => {
             const salt = await bcrypt.genSalt(10);
@@ -36,6 +40,6 @@ const User = db.define("tbb_users", {
     }
 })
 
-User.hasMany(Property, {foreignKey: 'owner_id'});
+User.hasMany(Property, { foreignKey: 'owner_id' });
 
 export default User;
