@@ -49,7 +49,7 @@ const emailResetPassword = async (userData) => {
         html: `
             <div class="background-color: red;">
                 <p>Hello, ${name}, you are changing your password account on RealState.com</p>
-                <p>Please follow the reset password link below: <a target="_blank" href="http://localhost:3000/bienes-raices/users/login/password-recovery/${tokenPassword}">Click Here to Change your Password.</a></p>
+                <p>Please follow the reset password link below: <a target="_blank" href="http://localhost:3000/bienes-raices/users/login/change-password/${tokenPassword}">Click Here to Change your Password.</a></p>
                 <p>If you didnt request a password recovery just ignore this email.</p>
             </div>
         `

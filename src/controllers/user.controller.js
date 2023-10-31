@@ -2,6 +2,7 @@ import { check, validationResult } from "express-validator";
 import { emailRegister, emailResetPassword } from "../lib/emails.js";
 
 import User from "../models/User.model.js"
+import bcrypt from 'bcrypt'
 import { generateID } from "../lib/tokens.js";
 
 const userController = {};
@@ -137,7 +138,6 @@ userController.resetPassword = async (req, res) => {
   const { email } = req.body;
   const userExists = await User.findOne({ where: { email } });
 
-  // TODO: Crear el token para cambiar la contraseña
   // Validar que result no tenga errores
   if (result.isEmpty()) {
     // Validar que el correo exista
@@ -151,9 +151,15 @@ userController.resetPassword = async (req, res) => {
         type: "Error"
       })
     } else {
+      // TODO: Crear el token para cambiar la contraseña
+      const tokenPassword = generateID();
+      userExists.token = tokenPassword;
+      userExists.save();
+
       // TODO: Enviar correo de acceso al cambio de contraseña
       emailResetPassword({
-        
+        email,
+        tokenPassword
       })
       console.log(`El usuario con correo ${email}`);
       res.render('templates/message.pug', {
@@ -162,7 +168,7 @@ userController.resetPassword = async (req, res) => {
         notificationMessage: "The  is invalid ",
         type: "Info"
       })
-  
+
     }
   } else {
     return res.render("auth/password-recovery.pug", {
@@ -170,11 +176,64 @@ userController.resetPassword = async (req, res) => {
       errors: result.array(),
       //! Sending params to pug 
       user: {
-        name: req.body.name,
         email: req.body.email
       }
     });
   }
+}
+
+userController.changePassword = async (req, res) => {
+  const { tokenPassword } = req.params;
+
+  // Verify if token already exists
+  let userToken = await User.findOne({ where: { token: tokenPassword } });
+  // TODO: Paginas de respuesta
+  if (!userToken) {
+    console.log(`This token is invalid `);
+    res.render('templates/message.pug', {
+      page: "Error in Validation Process",
+      notificationTitle: "The token is invalid ",
+      notificationMessage: "The token is invalid ",
+      type: "warning"
+    })
+  } else {
+    res.render("auth/password-change.pug", {
+      page: `Change Password`,
+      tokenPassword: tokenPassword
+    });
+  }
+}
+
+userController.updatePassword = async (req, res) => {
+  const { tokenPassword } = req.params;
+  const {newPassword} = req.body;
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+  // Verify if token already exists
+  let userToken = await User.findOne({ where: { token: tokenPassword } });
+  if (!userToken) {
+    console.log(`This token is invalid `);
+    res.render('templates/message.pug', {
+      page: "Error in Validation Process",
+      notificationTitle: "The token is invalid ",
+      notificationMessage: "The token is invalid ",
+      type: "Warning"
+    })
+  } else {
+    console.log(`Intentando actualizar la contraseña en la bd`);
+    userToken.token = null;
+    userToken.password = hashedPassword;
+    userToken.save();
+    res.render('templates/message.pug', {
+      page: "Error in Validation Process",
+      notificationTitle: "Change Password Success ",
+      notificationMessage: "The token is invalid ",
+      type: "Info"
+    })
+  }
+
 }
 
 export default userController;
