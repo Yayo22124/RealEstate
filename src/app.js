@@ -2,6 +2,7 @@ import User from './models/User.model.js'
 import database from './config/database.js'
 import express from 'express';
 import generalRouter from './routes/general.routes.js'
+import helmet from 'helmet';
 import morgan from "morgan";
 import path from 'path'
 import propertyRoutes from './routes/property.routes.js'
@@ -28,7 +29,8 @@ app.set("views", "./src/views")
 app.use(express.urlencoded({ extended: true }))
 // morgan - logger
 app.use(morgan('dev'));
-
+// Helmet
+app.use(helmet())
 // Public
 app.use(express.static('./src/public'));
 
