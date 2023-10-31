@@ -57,11 +57,12 @@ const emailResetPassword = async (userData) => {
 
     console.log(`
         ######### MailTrap ############ \n 
-            Se está intentando enviar un correo de Cambio de Contraseña al usuario: ${userData.email}, con el token de validación: ${userData.tokenPassword} 
+            Se está intentando enviar un correo de Cambio de Contraseña al usuario: ${email}, con el token de validación: ${tokenPassword} 
         \n #####################`
     );
 }
 
 export {
-    emailRegister
+    emailRegister,
+    emailResetPassword
 };

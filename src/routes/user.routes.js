@@ -13,5 +13,7 @@ router.get("/login/confirm/:token", userController.confirmAccount)
 
 // Reset Password
 router.post("/login/password-recovery", userController.resetPassword);
+// Change Password
+// router.post("/login/change-password/:tokenPassword", userController.changePassword);
 
 export default router;

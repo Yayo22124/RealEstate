@@ -1,7 +1,7 @@
 import { check, validationResult } from "express-validator";
+import { emailRegister, emailResetPassword } from "../lib/emails.js";
 
 import User from "../models/User.model.js"
-import { emailRegister } from "../lib/emails.js";
 import { generateID } from "../lib/tokens.js";
 
 const userController = {};
@@ -78,7 +78,8 @@ userController.insertUser = async (req, res) => {
       // response when user was created
       res.render('templates/message.pug', {
         page: "User Created Successfull",
-        message: `We have sent you an email to: ${email}, please verify your account`
+        message: `We have sent you an email to: ${email}, please verify your account`,
+        type: "Info"
       })
     }
 
@@ -114,8 +115,8 @@ userController.confirmAccount = async (req, res, next) => {
   } else {
     console.log(`This token is valid`);
     userToken.verified = true;
-    userToken.save();
     userToken.token = null;
+    userToken.save();
 
     res.render('templates/message.pug', {
       page: "Validation Complete",
@@ -127,56 +128,53 @@ userController.confirmAccount = async (req, res, next) => {
 }
 
 userController.resetPassword = async (req, res) => {
+  // Validar que el correo no este vació
+  await check('email').notEmpty().withMessage('Email field is required').isEmail().withMessage('The Email field should be an Email (user@domain.ext) and not empty').run(req);
+
+  let result = validationResult(req);
+
   // Validar la existencia del usuario a tráves del Email
   const { email } = req.body;
   const userExists = await User.findOne({ where: { email } });
 
   // TODO: Crear el token para cambiar la contraseña
-  if (!userExists) {
-    // Página de error
-    console.log(`El usuario con correo ${email}`);
-    res.render('templates/message.pug', {
-      page: "Recovery Password",
-      notificationTitle: `Error Email not Found`,
-      notificationMessage: "The token is invalid ",
-      type: "Error"
-    })
+  // Validar que result no tenga errores
+  if (result.isEmpty()) {
+    // Validar que el correo exista
+    if (!userExists) {
+      // Página de error
+      console.log(`El usuario con correo ${email}`);
+      res.render('templates/message.pug', {
+        page: "Recovery Password",
+        notificationTitle: `Error Email not Found`,
+        notificationMessage: "The token is invalid ",
+        type: "Error"
+      })
+    } else {
+      // TODO: Enviar correo de acceso al cambio de contraseña
+      emailResetPassword({
+        
+      })
+      console.log(`El usuario con correo ${email}`);
+      res.render('templates/message.pug', {
+        page: "Recovery Password",
+        notificationTitle: ` Email Found`,
+        notificationMessage: "The  is invalid ",
+        type: "Info"
+      })
+  
+    }
   } else {
-    // TODO: Enviar correo de acceso al cambio de contraseña
-    
-    console.log(`El usuario con correo ${email}`);
-    res.render('templates/message.pug', {
-      page: "Recovery Password",
-      notificationTitle: ` Email Found`,
-      notificationMessage: "The  is invalid ",
-      type: "Info"
-    })
-
+    return res.render("auth/password-recovery.pug", {
+      page: `Recovery Password`,
+      errors: result.array(),
+      //! Sending params to pug 
+      user: {
+        name: req.body.name,
+        email: req.body.email
+      }
+    });
   }
-}
-
-
-
-
-
-
-const resetPassword = async (req, res) => {
-  // TODO: Validar la existencia del usuario a tráves del Email
-  const { email } = req.body;
-  const userExists = User.findOne({ where: { email } });
-
-  // TODO: Crear el token para cambiar la contraseña
-  if (!userExists) {
-    // Página de error
-    console.log(`El usuario con correo ${email}`);
-    res.render('templates/message.pug', {
-      page: "Email not found",
-      notificationTitle: `Error Email not Found`,
-      notificationMessage: "The token is invalid ",
-      type: "error"
-    })
-  }
-  // TODO: Enviar correo de acceso al cambio de contraseña
 }
 
 export default userController;
