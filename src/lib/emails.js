@@ -47,11 +47,29 @@ const emailResetPassword = async (userData) => {
         subject: "RealState - 220087 -  Reset your Password",
         text: `We have recieved your password change request, please follow the link below.`,
         html: `
-            <div class="background-color: red;">
-                <p>Hello, ${name}, you are changing your password account on RealState.com</p>
-                <p>Please follow the reset password link below: <a target="_blank" href="http://localhost:3000/bienes-raices/users/login/change-password/${tokenPassword}">Click Here to Change your Password.</a></p>
-                <p>If you didnt request a password recovery just ignore this email.</p>
-            </div>
+        <section class="width:100%;:flex;align-items:center;background-color:#E9F1F7;justify-content:space-around;">
+        <span class="color:#30292F;"><strong class="color: #623CEA;font-weight:800;">Real</strong>State</span>
+        <div class="width:auto;display:flex;align-items:center;gap:6px;">
+            <a href="#" class="display:flex;align-items:center;">
+                <img src="/src/public/img/brand-facebook" alt="facebook">
+            </a>
+            <a href="#" class="display:flex;align-items:center;">
+                <img src="/src/public/img/brand-instagram" alt="instagram">
+            </a>
+            <a href="#" class="display:flex;align-items:center;">
+                <img src="/src/public/img/brand-x" alt="x">
+            </a>
+        </div>
+    </section>
+    <section class="width:100%;">
+        <h1>Reset Password Request</h1>
+        <p>Please follow the reset password link below: <a target="_blank" href="http://localhost:3000/bienes-raices/users/login/change-password/${tokenPassword}"> Here to Change your Password.</a></p>
+        <p>If you didnt request a password recovery just ignore this email.</p>
+    </section>
+    <section class="display:flex;align-items:center;justify-content:center;">
+        <hr>
+        <p>CEO Eli Haziel Ortiz Ramirez of RealState Corp 2023</p>
+    </section>
         `
     });
 

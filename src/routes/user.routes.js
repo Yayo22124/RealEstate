@@ -17,4 +17,7 @@ router.post("/login/password-recovery", userController.resetPassword);
 router.get("/login/change-password/:tokenPassword", userController.changePassword);
 router.post("/login/update-password/:tokenPassword", userController.updatePassword);
 
+// Authenticate
+router.post('/login/', userController.authenticateUser);
+
 export default router;

@@ -151,12 +151,12 @@ userController.resetPassword = async (req, res) => {
         type: "Error"
       })
     } else {
-      // TODO: Crear el token para cambiar la contraseña
+      //  Crear el token para cambiar la contraseña
       const tokenPassword = generateID();
       userExists.token = tokenPassword;
       userExists.save();
 
-      // TODO: Enviar correo de acceso al cambio de contraseña
+      //  Enviar correo de acceso al cambio de contraseña
       emailResetPassword({
         email,
         tokenPassword
@@ -206,7 +206,7 @@ userController.changePassword = async (req, res) => {
 
 userController.updatePassword = async (req, res) => {
   const { tokenPassword } = req.params;
-  const {newPassword} = req.body;
+  const { newPassword } = req.body;
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -236,4 +236,59 @@ userController.updatePassword = async (req, res) => {
 
 }
 
+// Authenticate User
+userController.authenticateUser = async (req, res) => {
+  console.log(`El usuario: ${email} está intentando autenticarse.`);
+  // TODO: Validar los datos del formulario
+  await check('email').notEmpty().withMessage('Email field is required').isEmail().withMessage('The Email field should be an Email (user@domain.ext) and not empty').run(req);
+  await check('password').notEmpty().withMessage('Password field is required').isLength({
+    min: 8,
+    max: 20
+  }).withMessage('The password is formed between 8 and 20 characters.').run(req);
+
+  let result = validationResult(req);
+
+  if (result.isEmpty()) {
+    // Desestructurar los datos del body (formulario)
+    const { email, password } = req.body;
+    // Validar que exista el correo electrónico
+    const userExists = await User.findOne({ where: { email } });
+    
+    // Validar que el correo exista
+    if (!userExists) {
+      // Página de error
+      res.render('templates/message.pug', {
+        page: "Recovery Password",
+        notificationTitle: `Error Email not Found`,
+        notificationMessage: `The user with email: ${email} do not exist.`,
+        type: "Error"
+      })
+    } else {
+      // TODO: Validar que el usuario esté validado
+      
+      userExists.save();
+      console.log(`El usuario con correo ${email}`);
+      res.render('templates/message.pug', {
+        page: "Recovery Password",
+        notificationTitle: ` Email Found`,
+        notificationMessage: "",
+        type: "Info"
+      })
+
+    }
+    // TODO: Validar la contraseña asignada al correo electrónico (usuario)
+
+    // TODO: Generar el Token de Acceso (JWT)
+    // TODO: Pintar la página de inicio (home)
+  } else {
+    return res.render("auth/login.pug", {
+      page: `Login`,
+      errors: result.array(),
+      //! Sending params to pug 
+      user: {
+        email: req.body.email
+      }
+    });
+  }
+}
 export default userController;
