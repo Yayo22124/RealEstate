@@ -238,19 +238,19 @@ userController.updatePassword = async (req, res) => {
 
 // Authenticate User
 userController.authenticateUser = async (req, res) => {
-  console.log(`El usuario: ${email} está intentando autenticarse.`);
   // TODO: Validar los datos del formulario
   await check('email').notEmpty().withMessage('Email field is required').isEmail().withMessage('The Email field should be an Email (user@domain.ext) and not empty').run(req);
   await check('password').notEmpty().withMessage('Password field is required').isLength({
     min: 8,
     max: 20
   }).withMessage('The password is formed between 8 and 20 characters.').run(req);
-
+  // Desestructurar los datos del body (formulario)
+  const { email, password } = req.body;
+  
   let result = validationResult(req);
-
+  console.log(`El usuario: ${email} está intentando autenticarse.`);
+  
   if (result.isEmpty()) {
-    // Desestructurar los datos del body (formulario)
-    const { email, password } = req.body;
     // Validar que exista el correo electrónico
     const userExists = await User.findOne({ where: { email } });
     
@@ -265,15 +265,23 @@ userController.authenticateUser = async (req, res) => {
       })
     } else {
       // TODO: Validar que el usuario esté validado
+      if (!userExists.verified) {
+        console.log(`El usuario con correo ${email}`);
+        res.render('templates/message.pug', {
+          page: "Error in login",
+          notificationTitle: ` Account is not validated `,
+          notificationMessage: `The user associated to the email: ${email} is not verified, please check your email.`,
+          type: "Warning"
+        })
+      } else {
+        res.render('templates/message.pug', {
+          page: "Home",
+          notificationTitle: ` All good `,
+          notificationMessage: ``,
+          type: "Info"
+        })
+      }
       
-      userExists.save();
-      console.log(`El usuario con correo ${email}`);
-      res.render('templates/message.pug', {
-        page: "Recovery Password",
-        notificationTitle: ` Email Found`,
-        notificationMessage: "",
-        type: "Info"
-      })
 
     }
     // TODO: Validar la contraseña asignada al correo electrónico (usuario)
