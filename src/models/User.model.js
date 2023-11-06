@@ -40,6 +40,10 @@ const User = db.define("tbb_users", {
     }
 })
 
-User.hasMany(Property, { foreignKey: 'owner_id' });
+// Comparar contraseñas (contraseña pasada como param y la contraseña de la bd (User))
+User.prototype.verifyPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+}
 
+User.hasMany(Property, { foreignKey: 'owner_id' });
 export default User;

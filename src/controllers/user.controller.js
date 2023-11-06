@@ -187,7 +187,7 @@ userController.changePassword = async (req, res) => {
 
   // Verify if token already exists
   let userToken = await User.findOne({ where: { token: tokenPassword } });
-  // TODO: Paginas de respuesta
+  //  Paginas de respuesta
   if (!userToken) {
     console.log(`This token is invalid `);
     res.render('templates/message.pug', {
@@ -238,16 +238,18 @@ userController.updatePassword = async (req, res) => {
 
 // Authenticate User
 userController.authenticateUser = async (req, res) => {
-  // TODO: Validar los datos del formulario
+  // Validar los datos del formulario
   await check('email').notEmpty().withMessage('Email field is required').isEmail().withMessage('The Email field should be an Email (user@domain.ext) and not empty').run(req);
   await check('password').notEmpty().withMessage('Password field is required').isLength({
     min: 8,
     max: 20
   }).withMessage('The password is formed between 8 and 20 characters.').run(req);
+  
   // Desestructurar los datos del body (formulario)
   const { email, password } = req.body;
   
   let result = validationResult(req);
+  
   console.log(`El usuario: ${email} está intentando autenticarse.`);
   
   if (result.isEmpty()) {
@@ -258,13 +260,13 @@ userController.authenticateUser = async (req, res) => {
     if (!userExists) {
       // Página de error
       res.render('templates/message.pug', {
-        page: "Recovery Password",
+        page: "Error in Login",
         notificationTitle: `Error Email not Found`,
         notificationMessage: `The user with email: ${email} do not exist.`,
         type: "Error"
       })
     } else {
-      // TODO: Validar que el usuario esté validado
+      //  Validar que el usuario esté validado
       if (!userExists.verified) {
         console.log(`El usuario con correo ${email}`);
         res.render('templates/message.pug', {
@@ -274,18 +276,31 @@ userController.authenticateUser = async (req, res) => {
           type: "Warning"
         })
       } else {
-        res.render('templates/message.pug', {
-          page: "Home",
-          notificationTitle: ` All good `,
-          notificationMessage: ``,
-          type: "Info"
-        })
+        // TODO: Validar la contraseña asignada al correo electrónico (usuario)
+        if (userExists.verifyPassword(password)) {
+          res.render('user/home.pug', {
+            page: "Home",
+            user: {
+              name: userExists.name
+            }
+          })
+        } else {
+          res.render("auth/login.pug", {
+            page: `Login`,
+            errors: [{
+              msg: `The email or password doesn't match.`
+            }],
+            //! Sending params to pug 
+            user: {
+              email: req.body.email
+            }
+          });
+        }
       }
       
 
     }
-    // TODO: Validar la contraseña asignada al correo electrónico (usuario)
-
+    
     // TODO: Generar el Token de Acceso (JWT)
     // TODO: Pintar la página de inicio (home)
   } else {
