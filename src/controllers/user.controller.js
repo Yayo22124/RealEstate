@@ -298,7 +298,7 @@ userController.authenticateUser = async (req, res) => {
         }
       }
       
-
+        
     }
     
     // TODO: Generar el Token de Acceso (JWT)
