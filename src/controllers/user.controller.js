@@ -1,9 +1,12 @@
 import { check, validationResult } from "express-validator";
 import { emailRegister, emailResetPassword } from "../lib/emails.js";
+import { generateID, jwtToken } from "../lib/tokens.js";
 
 import User from "../models/User.model.js"
 import bcrypt from 'bcrypt'
-import { generateID } from "../lib/tokens.js";
+import dotenv from 'dotenv';
+
+dotenv.config({ path: "src/.env" });
 
 const userController = {};
 
@@ -244,18 +247,18 @@ userController.authenticateUser = async (req, res) => {
     min: 8,
     max: 20
   }).withMessage('The password is formed between 8 and 20 characters.').run(req);
-  
+
   // Desestructurar los datos del body (formulario)
   const { email, password } = req.body;
-  
+
   let result = validationResult(req);
-  
+
   console.log(`El usuario: ${email} está intentando autenticarse.`);
-  
+
   if (result.isEmpty()) {
     // Validar que exista el correo electrónico
     const userExists = await User.findOne({ where: { email } });
-    
+
     // Validar que el correo exista
     if (!userExists) {
       // Página de error
@@ -276,8 +279,13 @@ userController.authenticateUser = async (req, res) => {
           type: "Warning"
         })
       } else {
-        // TODO: Validar la contraseña asignada al correo electrónico (usuario)
+        //  Validar la contraseña ingresada con la asignada al correo electrónico (usuario)
         if (userExists.verifyPassword(password)) {
+          // TODO: Generar el Token de Acceso (JWT)
+          const token = jwtToken();
+          console.log(`JWT generado es: ${token}`);
+
+          // Pintar la página de inicio (home)
           res.render('user/home.pug', {
             page: "Home",
             user: {
@@ -297,12 +305,11 @@ userController.authenticateUser = async (req, res) => {
           });
         }
       }
-      
-        
+
+
     }
-    
-    // TODO: Generar el Token de Acceso (JWT)
-    // TODO: Pintar la página de inicio (home)
+
+
   } else {
     return res.render("auth/login.pug", {
       page: `Login`,
