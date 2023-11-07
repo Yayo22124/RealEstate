@@ -281,8 +281,8 @@ userController.authenticateUser = async (req, res) => {
       } else {
         //  Validar la contraseña ingresada con la asignada al correo electrónico (usuario)
         if (userExists.verifyPassword(password)) {
-          // TODO: Generar el Token de Acceso (JWT)
-          const token = jwtToken();
+          //  Generar el Token de Acceso (JWT)
+          const token = jwtToken(userExists.id); // Enviar userID
           console.log(`JWT generado es: ${token}`);
 
           // Pintar la página de inicio (home)
