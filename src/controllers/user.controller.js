@@ -326,6 +326,7 @@ userController.authenticateUser = async (req, res) => {
 userController.homePage = (req,res) => {
   res.render('user/home.pug',{
     page: 'My Properties',
+    showHeader: true,
     user: {
       name: 'marco'
     }
