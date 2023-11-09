@@ -1,4 +1,5 @@
 import User from './models/User.model.js'
+import cookieParser from 'cookie-parser';
 import database from './config/database.js'
 import express from 'express';
 import generalRouter from './routes/general.routes.js'
@@ -27,6 +28,8 @@ app.set('view engine', 'pug');
 app.set("views", "./src/views")
 // urlencoded
 app.use(express.urlencoded({ extended: true }))
+// cookie-parser
+app.use(cookieParser());
 // morgan - logger
 app.use(morgan('dev'));
 // Helmet
@@ -37,7 +40,7 @@ app.use(express.static('./src/public'));
 //Middelwares
 // app.use(json());
 app.use('/api/bienes-raices-220087', generalRouter);
-app.use('/bienes-raices/users', userRoutes);
+app.use('/bienes-raices/user', userRoutes);
 app.use('/bienes-raices/propertys', propertyRoutes);
 
 export default app;

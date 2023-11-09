@@ -3,7 +3,7 @@ import userController from "../controllers/user.controller.js"
 
 const router = Express.Router();
 
-router.get("/", userController.formLogin)
+router.get("/login/", userController.formLogin)
 router.get("/login/register", userController.formRegister);
 router.get("/login/recovery", userController.formPasswordRecovery);
 router.post("/login/register-account", userController.insertUser);
@@ -18,6 +18,8 @@ router.get("/login/change-password/:tokenPassword", userController.changePasswor
 router.post("/login/update-password/:tokenPassword", userController.updatePassword);
 
 // Authenticate
-router.post('/login/', userController.authenticateUser);
+router.post('/', userController.authenticateUser);
+
+router.get('/', userController.homePage)
 
 export default router;

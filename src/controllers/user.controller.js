@@ -107,7 +107,7 @@ userController.confirmAccount = async (req, res, next) => {
   const { token } = req.params;
   // Verify if token already exists
   let userToken = await User.findOne({ where: { token } });
-  // TODO: Paginas de respuesta
+  //  Paginas de respuesta
   if (!userToken) {
     console.log(`This token is invalid `);
     res.render('templates/message.pug', {
@@ -285,13 +285,14 @@ userController.authenticateUser = async (req, res) => {
           const token = jwtToken(userExists.id); // Enviar userID
           console.log(`JWT generado es: ${token}`);
 
-          // Pintar la página de inicio (home)
-          res.render('user/home.pug', {
-            page: "Home",
-            user: {
-              name: userExists.name
-            }
-          })
+          // TODO: Almacenar el JWT en una cookie
+          // TODO: Redireccionar al home
+          res.cookie('_token',token,{
+            httpOnly: true,
+            //secure: true, // option to configure https protocol certify
+
+          }).redirect('/bienes-raices/user/');
+         
         } else {
           res.render("auth/login.pug", {
             page: `Login`,
@@ -320,5 +321,14 @@ userController.authenticateUser = async (req, res) => {
       }
     });
   }
+}
+
+userController.homePage = (req,res) => {
+  res.render('user/home.pug',{
+    page: 'My Properties',
+    user: {
+      name: 'marco'
+    }
+  })
 }
 export default userController;
