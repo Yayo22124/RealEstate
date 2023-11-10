@@ -20,6 +20,6 @@ router.post("/login/update-password/:tokenPassword", userController.updatePasswo
 // Authenticate
 router.post('/', userController.authenticateUser);
 
-router.get('/', userController.homePage)
+router.get('/', userController.homePage);
 
 export default router;

@@ -1,9 +1,13 @@
-import  Express  from "express";
-import propertyController from "../controllers/Property.controller.js"
+import Express from "express";
+import {
+    formProperty
+} from "../controllers/property.controller.js"
+
+// import propertyController from "../controllers/PropertyReto.controller.js"
 
 const router = Express.Router();
 
-router.get("/", propertyController.formProperty);
-router.post("/register-property", propertyController.registerProperty);
+router.get("/create/", formProperty);
+// router.post("/register-property", propertyController.registerProperty);
 
 export default router;

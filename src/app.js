@@ -41,6 +41,6 @@ app.use(express.static('./src/public'));
 // app.use(json());
 app.use('/api/bienes-raices-220087', generalRouter);
 app.use('/bienes-raices/user', userRoutes);
-app.use('/bienes-raices/propertys', propertyRoutes);
+app.use('/bienes-raices/properties', propertyRoutes);
 
 export default app;
