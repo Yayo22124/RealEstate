@@ -1,3 +1,4 @@
+import Property from './models/Property.model.js';
 import User from './models/User.model.js'
 import cookieParser from 'cookie-parser';
 import database from './config/database.js'
@@ -32,8 +33,17 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
 // morgan - logger
 app.use(morgan('dev'));
-// Helmet
-app.use(helmet())
+
+// HABILITAR LA PROYTECCION A TRAVEZ DE HELMET
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", 'https://unpkg.com', 'https://cdnjs.cloudflare.com', "'unsafe-eval'"],
+        styleSrc: ["'self'", 'https://unpkg.com', 'https://cloudflare.com', 'https://cdnjs.cloudflare.com'],
+        imgSrc: ["'self'", 'data:', 'https://unpkg.com', 'https://cloudflare.com', 'https://cdnjs.cloudflare.com', 'https://a.tile.openstreetmap.org', 'https://b.tile.openstreetmap.org', 'https://c.tile.openstreetmap.org'],
+        connectSrc: ["'self'", 'https://tile-provider-domain.com', 'https://geocode.arcgis.com'],
+    },
+}));
 // Public
 app.use(express.static('./src/public'));
 

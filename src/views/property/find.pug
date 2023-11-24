@@ -1,0 +1,12 @@
+extends ../layout/index
+block content
+    .py-5
+        h2.text-center.text-2xl.font-extrabold= page
+        if errors
+            div(class="max-w-md mx-auto my-10")
+                each error in errors
+                    p(class="bg-red-600 rounded-md text-white uppercase text-xs text-center p-2 mb-1 font-bold")= error.msg 
+        .bg-gray-200.shadow.py-8.px-4.rounded-xl.mx-auto.max-w-4xl.my-10(class="md:px-10")
+            form.space-y-2(action=`/bienes-raices/properties/find` method="POST" class="grid gap-5 grid-cols-6") 
+                input#id( name="id" placeholder="Search by ID a property to edit" class="col-span-4 outline-none p-4 rounded-full")
+                button(class=" rounded-full bg-reislin-black col-span-2 hover:bg-reislin-black/80 hover:bg-custom4 text-white font-bold py-3 cursor-pointer hover:scale-105 active:scale-95" type="submit" ) Search

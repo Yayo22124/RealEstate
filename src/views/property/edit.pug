@@ -13,9 +13,10 @@ block content
                 .space-y-8
                     h3.text-lg.leading-6.font-md.text-gray-900.font-bold Propery general information.
                     p.text-gray-600 Please carefully type the specific data about the property that you want to offer
+                    span= property.title
                 div
                     label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="title") Title of Announcement
-                    input#title.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(type="text" name="title" placeholder="ex. Two floor house")
+                    input#title.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(type="text" name="title" placeholder="ex. Two floor house" value=property.title)
                 div(class="md:flex md:gap-4")
                     div(class="md:w-1/2")
                         label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="category") Category
@@ -67,7 +68,7 @@ block content
                 input#street(type="hidden" name="street")
                 input#lat(type="hidden" name="lat")
                 input#lng(type="hidden" name="lng")
-                button(class="w-3/6 mt-10 mx-auto rounded-full bg-reislin-black hover:bg-reislin-black/80 hover:bg-custom4 text-white font-bold py-3 cursor-pointer hover:scale-105 active:scale-95" type="submit" value="Create") Save Property
+                button(class="w-3/6 mt-10 mx-auto rounded-full bg-reislin-black hover:bg-reislin-black/80 hover:bg-custom4 text-white font-bold py-3 cursor-pointer hover:scale-105 active:scale-95" type="submit" value="Create") Update Property
 block scripts
     script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
     script(src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js")

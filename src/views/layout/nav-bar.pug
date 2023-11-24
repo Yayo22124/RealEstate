@@ -1,8 +1,14 @@
-header(class="bg-indigo-600 p-4")
-    div(class="container flex mx-auto justify-between items-center")
-        h1(class="text-red-700 font-extrabold text-center text-2xl ") Real
-            span(class="font-normal text-white") Estate 
-        nav(class="flex gap-3 my-5 text-sm md:flex md:items-center font-bold text-white")
-            a(href="#" class="bg-indigo-800 py-2 px-10 rounded-full hover:bg-red-700 hover:scale-105 shadow-lg shadow-gray-600/80 active:scale-95") Properties
-            a(href="#" class="bg-indigo-800 py-2 px-10 rounded-full hover:bg-red-700 hover:scale-105 shadow-lg shadow-gray-600/80 active:scale-95") Profile
-            a(href="#" class="bg-indigo-800 py-2 px-10 rounded-full hover:bg-red-700 hover:scale-105 shadow-lg shadow-gray-600/80 active:scale-95") Logout
+link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0")
+link(el="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0")
+nav(class="bg-reislin-black flex items-center justify-between px-3 w-full z-20 top-0 start-0 border-b border-gray-200" )
+    span(class="self-center text-2xl font-semibold whitespace-nowrap text-majorelle-blue") Real
+        span(class="text-white") Estate
+    ul(class="flex p-4 font-medium  rounded-lg bg-transparent ")
+        li
+            a(href="/bienes-raices/user/" class="block py-2 px-3 text-white hover:text-majorelle-blue hover:scale-105 active:scale-95") Home
+        li
+            a(href="#" class="block py-2 px-3 text-white hover:text-majorelle-blue hover:scale-105 active:scale-95") Properties 
+    div(class="flex space-x-3  rtl:space-x-reverse")
+        a(href="/bienes-raices/user/login" class="text-white bg-majorelle-blue active:scale-95 hover:scale-105 focus:outline-none  font-medium rounded-lg text-xs px-4 py-2 text-center  dark:hover:bg-majorelle-blue/80   flex items-center justify-center gap-1") 
+            span(class="material-symbols-outlined text-[17px]") logout
+            span Logout

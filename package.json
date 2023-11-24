@@ -5,10 +5,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/index.js",
+    "all": "concurrently \"npm run css\" \"npm run js\" -- \"npm run dev\" --webpack --server",
     "start-permanente": "nodemon ./src/server",
     "dev": "nodemon ./src/index",
     "css": "postcss ./src/public/css/tailwind.css -o ./src/public/css/app.css --watch",
+    "js": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -24,12 +25,15 @@
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
     "express": "^4.18.2",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -40,6 +44,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.1",
     "nodemailer": "^6.9.7",
+    "path": "^0.12.7",
     "pug": "^3.0.2",
     "sequelize": "^6.33.0"
   }

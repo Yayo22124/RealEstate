@@ -6,17 +6,38 @@ const Property = db.define("tbb_propertys", {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    description: {
-        type: DataTypes.TEXT
-    },
-    price: {
-        type: DataTypes.DECIMAL(10, 2),
+    category: {
+        type: DataTypes.ENUM("apartment", "house", "landfield", "warehouse"),
         allowNull: false
     },
-    estatus: {
-        type: DataTypes.ENUM('Sold', 'Available', 'In process'),
-        defaultValue: 'Available'
-    }
+    priceRange: {
+        type: DataTypes.ENUM('1', '2', '3'),
+        allowNull: false
+    },
+    nRooms: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+    },
+    nWC: {
+        type: DataTypes.STRING(255),
+        allowNull: false    
+    },
+    nPK: {
+        type: DataTypes.STRING(255),
+        allowNull: false    
+    },
+    street: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+    },
+    lat: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+    },
+    lng: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+    },
 
 })
 
