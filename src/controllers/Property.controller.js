@@ -2,10 +2,15 @@ import { check, validationResult } from "express-validator"
 
 import Property from "../models/Property.model.js"
 
-const formProperty = (req, res) => {
+const formProperty = async (req, res) => {
+    console.log(req.body);
+    const [categories, prices] = await Promise.all([Categories.findAll(), Price.findAll()])
     res.render('property/create.pug', {
         page: 'New Property',
-        showHeader: true
+        showHeader: true,
+        data: req.body,
+        categories,
+        prices
     })
 }
 

@@ -23,11 +23,11 @@
 
         geocoderService.reverse().latlng(position, 13).run(function (error, result) {
             console.log(`La informacion calculada por geocoder al intentar hacer la georeferencia inversa es:${result}`)
-            console.log(result)
 
             marker.bindPopup(result.address.LongLabel)
             document.querySelector('.street').textContent = result.address?.Address ?? '';
             document.querySelector('#street').value = result.address?.Address ?? '';
+            result.
             document.querySelector('#lat').value = result.latlng?.lat ?? '';
             document.querySelector('#lng').value = result.latlng?.lng ?? '';
         })

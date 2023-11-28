@@ -1,9 +1,15 @@
 import { DataTypes } from 'sequelize';
-import db from '../config/database.js';
+import database from '../config/database.js';
 
-const Property = db.define("tbb_propertys", {
+const Property = database.define("tbb_propertys", {
+    id:{
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        primaryKey: true
+    },
     title: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(150),
         allowNull: false
     },
     category: {
@@ -15,16 +21,19 @@ const Property = db.define("tbb_propertys", {
         allowNull: false
     },
     nRooms: {
-        type: DataTypes.STRING(255),
-        allowNull: false
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
     },
     nWC: {
-        type: DataTypes.STRING(255),
-        allowNull: false    
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
     },
     nPK: {
-        type: DataTypes.STRING(255),
-        allowNull: false    
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
     },
     street: {
         type: DataTypes.STRING(255),
@@ -38,6 +47,15 @@ const Property = db.define("tbb_propertys", {
         type: DataTypes.STRING(255),
         allowNull: false
     },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    isPublished: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
 
 })
 

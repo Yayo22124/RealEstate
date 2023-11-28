@@ -10,7 +10,10 @@
     "dev": "nodemon ./src/index",
     "css": "postcss ./src/public/css/tailwind.css -o ./src/public/css/app.css --watch",
     "js": "webpack --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:importData": "node ./src/lib/seeders/startSeeder.js -i",
+    "db:deleteData": "node ./src/lib/seeders/startSeeder.js -d"
+
   },
   "keywords": [
     "AWOS",

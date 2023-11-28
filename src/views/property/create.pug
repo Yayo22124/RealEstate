@@ -16,6 +16,9 @@ block content
                 div
                     label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="title") Title of Announcement
                     input#title.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(type="text" name="title" placeholder="ex. Two floor house")
+                div
+                    label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="title") Title of Announcement
+                    textarea#description.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(name="description" placeholder="Beautiful white house...." cols="30" rows="10")
                 div(class="md:flex md:gap-4")
                     div(class="md:w-1/2")
                         label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="category") Category
@@ -29,9 +32,8 @@ block content
                         label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="priceRange") Price Range 
                         select#priceRange.w-full.px-3.py-2.border-gray-300.rounded(name="priceRange")
                             option(value="" selected) -- Select price range --
-                            option(value="1") $100,000 - $150,000 
-                            option(value="2") $151,000 - $200,000
-                            option(value="3") +$200,000
+                            each price in prices
+                                option(value=price.id)= price.name 
 
                 div(class="md:flex md:gap-4")
                     div(class="md:w-1/3")
@@ -61,12 +63,12 @@ block content
                 .border-gray-600.border-t.py-5.sp-y-5
                     h3.text-lg.leading-6.font-medium.text-gray-900 Location
                     p.text-gray-600.mb-4 Please set the  exactly ubication of the property in your city
-                    span(class="bg-reislin-black outline-none text-white w-full text-center p-2" ).street
+                    span(class="bg-reislin-black outline-none text-white w-full text-center p-2" )=data.street ? data.street : 'Select your location in the map.'
                 #map.h-96
                 div
-                input#street(type="hidden" name="street")
-                input#lat(type="hidden" name="lat")
-                input#lng(type="hidden" name="lng")
+                input#street(type="hidden" name="street" value=data.street ? data.street : '')
+                input#lat(type="hidden" name="lat" value=data.lat ? data.lat : 'no hay nada')
+                input#lng(type="hidden" name="lng" value=data.lng ? data.lng : '')
                 button(class="w-3/6 mt-10 mx-auto rounded-full bg-reislin-black hover:bg-reislin-black/80 hover:bg-custom4 text-white font-bold py-3 cursor-pointer hover:scale-105 active:scale-95" type="submit" value="Create") Save Property
 block scripts
     script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
