@@ -1,53 +1,55 @@
+import bcrypt from "bcrypt";
+
 const people = [
     {
         name: "Haziel",
         email: "hazielortiz04@gmail.com",
-        password: "12345678",
+        password: bcrypt.hashSync('12345678',10),
     },
     {
         name: "Irving",
         email: "irving@gmail.com",
-        password: "12345678",
+        password: bcrypt.hashSync('12345678',10),
     },
     {
         name: "Alex",
         email: "amuriii@gmail.com",
-        password: "12345678",
+        password: bcrypt.hashSync('12345678',10),
     },
     {
         name: "Romero",
         email: "romero@gmail.com",
-        password: "12345678",
+        password: bcrypt.hashSync('12345678',10),
     },
     {
         name: "Carballo",
         email: "carba@gmail.com",
-        password: "12345678",
+        password: bcrypt.hashSync('12345678',10),
     },
     {
         name: "Raul",
         email: "raulo@gmail.com",
-        password: "12345678",
+        password: bcrypt.hashSync('12345678',10),
     },
     {
         name: "Ulises",
         email: "ulises@gmail.com",
-        password: "12345678",
+        password: bcrypt.hashSync('12345678',10),
     },
     {
         name: "Uriel",
         email: "ueriel@gmail.com",
-        password: "12345678",
+        password: bcrypt.hashSync('12345678',10),
     },
     {
         name: "Edgar",
         email: "ergarin@gmail.com",
-        password: "12345678",
+        password: bcrypt.hashSync('12345678',10),
     },
     {
         name: "Jesus",
         email: "tonito@gmail.com",
-        password: "12345678",
+        password: bcrypt.hashSync('12345678',10),
     },
 ]
 

@@ -24,10 +24,8 @@ block content
                         label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="category") Category
                         select#category.w-full.px-3.py-2.border-gray-300.rounded(name="category")
                             option(value="" selected) -- Select category --
-                            option(value="apartment") Apartment 
-                            option(value="house") House 
-                            option(value="landfield") Landfield 
-                            option(value="warehouse") Warehouse
+                            each category in categories
+                                option(value=category.id)= category.name
                     div(class="md:w-1/2")
                         label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="priceRange") Price Range 
                         select#priceRange.w-full.px-3.py-2.border-gray-300.rounded(name="priceRange")

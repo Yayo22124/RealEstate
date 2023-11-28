@@ -1,5 +1,7 @@
 import { check, validationResult } from "express-validator"
 
+import Categories from "../models/Categories.js";
+import Price from "../models/Prices.js";
 import Property from "../models/Property.model.js"
 
 const formProperty = async (req, res) => {
