@@ -45,5 +45,4 @@ User.prototype.verifyPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 }
 
-// User.hasMany(Property, { foreignKey: 'owner_id' });
 export default User;

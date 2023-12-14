@@ -15,15 +15,17 @@ block content
                     p.text-gray-600 Please carefully type the specific data about the property that you want to offer
                 div
                     label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="title") Title of Announcement
-                    input#title.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(type="text" name="title" placeholder="ex. Two floor house")
+                    input#title.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(type="text" name="title" placeholder="ex. Two floor house" value=property ? property.title : '')
                 div
-                    label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="title") Title of Announcement
-                    textarea#description.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(name="description" placeholder="Beautiful white house...." cols="30" rows="10")
+                    label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="description") Description of Property
+                    textarea#description.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(name="description" placeholder="Beautiful white house...." cols="30" rows="10" value=property ? property.description : '')
                 div(class="md:flex md:gap-4")
                     div(class="md:w-1/2")
                         label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="category") Category
                         select#category.w-full.px-3.py-2.border-gray-300.rounded(name="category")
                             option(value="" selected) -- Select category --
+                            if (property)
+                                option(value=property.category selected)
                             each category in categories
                                 option(value=category.id)= category.name
                     div(class="md:w-1/2")
@@ -37,7 +39,7 @@ block content
                     div(class="md:w-1/3")
                         label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="nRooms") Number of Rooms
                         select#nRooms.w-full.px-3.py-2.border-gray-300.rounded(name="nRooms")
-                            option(value selected disabled) -- SELECT NUMBER --
+                            option(value="" selected disabled) -- SELECT NUMBER --
                             option(value="0") N/A
                             - for (let n = 1; n < 11; n++)
                                 option(value=n) #{n}
@@ -45,7 +47,7 @@ block content
                     div(class="md:w-1/3")
                         label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="nWC") Number of W.C.
                         select#nWC.w-full.px-3.py-2.border-gray-300.rounded(name="nWC")
-                            option(value selected disabled) -- SELECT NUMBER --
+                            option(value="" selected disabled) -- SELECT NUMBER --
                             option(value="0") N/A
                             - for (let n = 1; n < 6; n++)
                                 option(value=n) #{n}
@@ -53,7 +55,7 @@ block content
                     div(class="md:w-1/3")
                         label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="nPK") Number of Parking Lots
                         select#nPK.w-full.px-3.py-2.border-gray-300.rounded(name="nPK")
-                            option(value selected disabled) -- SELECT NUMBER --
+                            option(value="" selected disabled) -- SELECT NUMBER --
                             option(value="0") N/A
                             - for (let n = 1; n < 5; n++)
 
@@ -61,12 +63,18 @@ block content
                 .border-gray-600.border-t.py-5.sp-y-5
                     h3.text-lg.leading-6.font-medium.text-gray-900 Location
                     p.text-gray-600.mb-4 Please set the  exactly ubication of the property in your city
-                    span(class="bg-reislin-black outline-none text-white w-full text-center p-2" )=data.street ? data.street : 'Select your location in the map.'
+
                 #map.h-96
-                div
-                input#street(type="hidden" name="street" value=data.street ? data.street : '')
-                input#lat(type="hidden" name="lat" value=data.lat ? data.lat : 'no hay nada')
-                input#lng(type="hidden" name="lng" value=data.lng ? data.lng : '')
+                div 
+                    p.street= data.street ? data.street : ''
+                if (property)
+                    input(type="hidden" name="street" id="street" value= property.street ? property.street : '')
+                    input(type="hidden" name="lat" id="lat" value= property.lat ? property.lat : '')
+                    input(type="hidden" name="lng" id="lng" value= property.lng ? property.lng : '')
+                else
+                    input(type="hidden" name="street" id="street" value= data.street ? data.street : '')
+                    input(type="hidden" name="lat" id="lat" value= data.lat ? data.lat : '')
+                    input(type="hidden" name="lng" id="lng" value= data.lng ? data.lng : '')
                 button(class="w-3/6 mt-10 mx-auto rounded-full bg-reislin-black hover:bg-reislin-black/80 hover:bg-custom4 text-white font-bold py-3 cursor-pointer hover:scale-105 active:scale-95" type="submit" value="Create") Save Property
 block scripts
     script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")

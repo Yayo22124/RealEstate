@@ -22,9 +22,9 @@ const emailRegister = async (userData) => {
         subject: "Welcome to RealState - 220087 - Confirm your account",
         text: `Thank you for chosing us, in our platform, you could sell and buy properties, to continue please follow confirmation link below: link`,
         html: `
-            <div class="background-color: red;">
+            <div class="background-color: blue1;">
                 <p>Hello, ${name}, you are verifying your account on RealState.com</p>
-                <p>Your account is almost active please follow the activation link below: <a target="_blank" href="http://localhost:3000/bienes-raices/users/login/confirm/${token}">Click Here to Active Your Account.</a></p>
+                <p>Your account is almost active please follow the activation link below: <a target="_blank" href="http://localhost:3000/bienes-raices/user/login/confirm/${token}">Click Here to Active Your Account.</a></p>
                 <p>If you didnt create this account just ignore this email.</p>
             </div>
         `

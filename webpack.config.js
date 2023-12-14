@@ -2,9 +2,12 @@ import path from "path"
 
 export default {
     mode: "development",
-    entry: "./src/lib/map.js",
+    entry: {
+        map: "./src/lib/map.js",
+        imageBox: './src/lib/customDropzone.js'
+    },
     output: {
-        filename: `map.js`,
+        filename: `[name].js`,
         path: path.resolve("src/public/js")
     },
 }

@@ -12,14 +12,6 @@ const Property = database.define("tbb_propertys", {
         type: DataTypes.STRING(150),
         allowNull: false
     },
-    category: {
-        type: DataTypes.ENUM("apartment", "house", "landfield", "warehouse"),
-        allowNull: false
-    },
-    priceRange: {
-        type: DataTypes.ENUM('1', '2', '3'),
-        allowNull: false
-    },
     nRooms: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -49,7 +41,8 @@ const Property = database.define("tbb_propertys", {
     },
     image: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        defaultValue: "por definir"
     },
     isPublished: {
         type: DataTypes.BOOLEAN,

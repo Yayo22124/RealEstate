@@ -3,8 +3,9 @@ import bcrypt from "bcrypt";
 const people = [
     {
         name: "Haziel",
-        email: "hazielortiz04@gmail.com",
+        email: "haziel.ortiz04@gmail.com",
         password: bcrypt.hashSync('12345678',10),
+        verified: 1
     },
     {
         name: "Irving",
